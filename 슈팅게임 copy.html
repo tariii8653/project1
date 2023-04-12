@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{margin:0px;}
+        #stage{
+            width:100%;
+            height: 650px;
+            background-image:url(../images/m11.jpg) ;
+        }
+    </style>
+    <script src="../day1025/Plane copy.js"></script> 
+    <script>
+        let stage;
+        let bgX=0;
+        let plane;
+        function bgEffect(){
+            bgX=bgX-1;
+            stage.style.backgroundPosition=bgX+"px 0px";
+        }
+        function moveX(velX){
+            plane.velX=velX;
+        }
+
+        function moveY(velY){
+            plane.velY=velY;
+        }
+
+       function gameLoop(){
+        bgEffect();
+
+        plane.tick();
+
+        plane.render();
+        setTimeout("'gameLoop()",10);
+       }
+
+        function createHero(){
+           //(container,x,y,width,height,velX,velY)
+            plane=new Plane(stage, 100,200,80,60,0,0)
+        }
+
+        function createEnemy(){
+            enemy=new Enemy()
+        }
+
+        function init(){
+            stage=document.getElementById("stage");
+            createHero();
+            //createEnemy();
+            document.body.addEventListener("keydown",function(e){
+                switch(e.keyCode){
+                    case 37:moveX(-5);break;
+                    case 38:moveY(-5);break;
+                    case 39:moveX(5);break;
+                    case 40:moveY(5);break;
+                    case 32:fire(5);break;
+                }
+            });
+            document.body.addEventListener("keyup",function(e){
+                switch(e.keyCode){
+                    case 37:moveX(0);break;
+                    case 38:moveY(0);break;
+                    case 39:moveX(0);break;
+                    case 40:moveY(0);break;
+                    case 32:fire(0);break;
+                }
+            });
+            gameLoop();
+        }
+        window.addEventListener("load",function(){
+            init();
+        });
+    </script>
+</head>
+<body>
+    <div id="stage"></div>
+</body>
+</html>
+               
+
+            
